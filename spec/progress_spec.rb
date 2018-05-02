@@ -43,3 +43,45 @@ RSpec.describe Headway::Progress, 'multi-stage, no nesting' do
     expect(progress.completed?).to be_truthy
   end
 end
+
+RSpec.describe Headway::Progress, 'multi-stage, nested during progress tracking' do
+  let(:progress) { Headway::Progress.new }
+
+  it 'supports tracking and reporting progress' do
+    expect(progress.percentage).to eq 0.0
+    expect(progress.completed?).to be_falsy
+
+    progress.start_multistage_process(stages: 4)
+    expect(progress.percentage).to eq 0.0
+
+    progress.set_percentage 60.0
+    expect(progress.percentage).to eq 15.0
+
+    progress.set_complete
+    expect(progress.percentage).to eq 25.0
+    expect(progress.completed?).to be_falsy
+
+    progress.start_multistage_process(stages: 2)
+    expect(progress.percentage).to eq 25.0
+
+    progress.set_percentage 40.0
+    expect(progress.percentage).to eq 30.0
+
+    progress.set_complete
+    expect(progress.percentage).to eq 37.5
+
+    progress.set_complete
+    expect(progress.percentage).to eq 50.0
+    expect(progress.completed?).to be_falsy
+
+    progress.set_percentage 60.0
+    expect(progress.percentage).to eq 65.0
+
+    progress.set_complete
+    expect(progress.percentage).to eq 75.0
+
+    progress.set_complete
+    expect(progress.percentage).to eq 100.0
+    expect(progress.completed?).to be_truthy
+  end
+end
