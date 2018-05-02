@@ -5,23 +5,29 @@ module Headway
     COMPLETE_PERCENT = 100.0
 
     def initialize
-      @progress = START_PERCENT
+      @stages = [ START_PERCENT ]
+      @current_stage_index = 0
     end
 
     def percentage
-      @progress
+      @stages.inject(&:+) / (@stages.size)
     end
 
     def set_percentage(percentage)
-      @progress = percentage
+      @stages[@current_stage_index] = percentage
+    end
+
+    def start_multistage_process(stages:)
+      @stages = Array.new(stages) { START_PERCENT }
     end
 
     def set_complete
-      @progress = COMPLETE_PERCENT
+      @stages[@current_stage_index] = COMPLETE_PERCENT
+      @current_stage_index += 1
     end
 
     def completed?
-      @progress >= COMPLETE_PERCENT
+      @stages[@current_stage_index].nil?
     end
 
   end
