@@ -13,6 +13,10 @@ module Headway
       @root_stage.percentage
     end
 
+    def formatted_percentage
+      sprintf('%.1f%', percentage)
+    end
+
     def set_percentage(percentage)
       current_stage.set_percentage percentage
     end
