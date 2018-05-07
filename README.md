@@ -26,7 +26,7 @@ Initialize a new Progress instance:
 progress = Headway::Progress.new
 ```
 
-When the current process is composed of several stages, tell the Progress instace how many there will be:
+When the current process is composed of several stages, tell the Progress instance how many there will be:
 
 ```ruby
 progress.start_multistage_process stages: 4
