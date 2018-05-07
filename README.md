@@ -78,6 +78,7 @@ progress.percentage
 
 The above stage nesting would look like this:
 
+```
 Stage 1 (20%)
   Stage 1.1 (10%)
   Stage 1.2 (10%)
@@ -88,6 +89,7 @@ Stage 2 (20%)
 Stage 3 (20%)
 Stage 4 (20%)
 Stage 5 (20%)
+```
 
 ## Development
 
